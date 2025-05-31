@@ -12,14 +12,10 @@ import javax.swing.JOptionPane;
 public class UsuarioDAO {
     
     Connection conn;
+    PreparedStatement pstm;
     
-    public ResultSet autenticacaoUsuario(UsuarioDTO objusuariodto) throws ClassNotFoundException{
+    public void cadastrarContato(UsuarioDTO objusuariodto) throws ClassNotFoundException{
     conn = new conexaoDAO().conectaBD();
-    
-    if (conn == null) {
-        JOptionPane.showMessageDialog(null, "Falha na conexão com o banco.");
-        return null;
-    }
     
     try {
         String sql = "select * from USUARIO where nome_usuario = ? and senha_usuario = ?";

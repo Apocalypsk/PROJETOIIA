@@ -5,6 +5,9 @@
  */
 package VIEW;
 
+import DAO.UsuarioDAO;
+import DTO.UsuarioDTO;
+
 /**
  *
  * @author kathleen
@@ -28,7 +31,7 @@ public class frmContatos extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTelefone = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -39,9 +42,9 @@ public class frmContatos extends javax.swing.JFrame {
 
         jLabel1.setText("Telefone:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtTelefoneActionPerformed(evt);
             }
         });
 
@@ -50,6 +53,11 @@ public class frmContatos extends javax.swing.JFrame {
         jLabel3.setText("E-mail:");
 
         btnInserir.setText("INSERIR");
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,7 +78,7 @@ public class frmContatos extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                                 .addComponent(txtEmail)
-                                .addComponent(jTextField1)))))
+                                .addComponent(txtTelefone)))))
                 .addContainerGap(197, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -79,7 +87,7 @@ public class frmContatos extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -96,9 +104,27 @@ public class frmContatos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtTelefoneActionPerformed
+
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        String telefone, nome, email;
+        
+        telefone = txtTelefone.getText();
+        nome = txtNome.getText();
+        email = txtEmail.getText();
+        
+        UsuarioDTO objusuariodto = new UsuarioDTO();
+        objusuariodto.setTelefone(telefone);
+        objusuariodto.setNome(nome);
+        objusuariodto.setEmail(email);
+        
+        UsuarioDAO objusuariodao = new UsuarioDAO();
+        objusuariodao.cadastrarContato(objusuariodto);
+        
+        
+    }//GEN-LAST:event_btnInserirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,8 +166,8 @@ public class frmContatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }
