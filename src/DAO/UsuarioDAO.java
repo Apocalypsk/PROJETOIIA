@@ -15,20 +15,24 @@ public class UsuarioDAO {
     PreparedStatement pstm;
     
     public void cadastrarContato(UsuarioDTO objusuariodto) throws ClassNotFoundException{
-    conn = new conexaoDAO().conectaBD();
-    
-    try {
-        String sql = "select * from USUARIO where nome_usuario = ? and senha_usuario = ?";
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setString(1, objusuariodto.getNome_usuario());
-        pstm.setString(2, objusuariodto.getSenha_usuario());
+        String sql = "insert into contatos (telefone, nome, email) values (?,?,?)";
+        
+        conn = new conexaoDAO().conectaBD();
+        
+        try {
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, objusuariodto.getTelefone());
+            pstm.setString(2, objusuariodto.getNome());
+            pstm.setString(3, objusuariodto.getEmail());
+            
+            pstm.execute();
+            pstm.close();
+            
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "usuarioDAO" + erro);
+        }
+        
 
-        ResultSet rs = pstm.executeQuery();
-        return rs;
-
-    } catch (SQLException erro) {
-        JOptionPane.showMessageDialog(null, "Usuariodao: " + erro);
-        return null;
-    }
 }
 }

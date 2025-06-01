@@ -7,6 +7,8 @@ package VIEW;
 
 import DAO.UsuarioDAO;
 import DTO.UsuarioDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -121,7 +123,11 @@ public class frmContatos extends javax.swing.JFrame {
         objusuariodto.setEmail(email);
         
         UsuarioDAO objusuariodao = new UsuarioDAO();
-        objusuariodao.cadastrarContato(objusuariodto);
+        try {
+            objusuariodao.cadastrarContato(objusuariodto);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmContatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }//GEN-LAST:event_btnInserirActionPerformed
