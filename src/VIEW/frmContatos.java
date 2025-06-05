@@ -25,8 +25,7 @@ public class frmContatos extends javax.swing.JFrame {
      */
     public frmContatos() {
         initComponents();
-        
-        
+
     }
 
     /**
@@ -48,6 +47,7 @@ public class frmContatos extends javax.swing.JFrame {
         btnPesquisar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaContatos = new javax.swing.JTable();
+        btnAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +90,13 @@ public class frmContatos extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tabelaContatos);
 
+        btnAlterar.setText("ALTERAR");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,7 +109,9 @@ public class frmContatos extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnInserir)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnPesquisar))
+                                .addComponent(btnPesquisar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAlterar))
                             .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -112,14 +121,15 @@ public class frmContatos extends javax.swing.JFrame {
                             .addComponent(txtEmail))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,10 +149,11 @@ public class frmContatos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInserir)
-                    .addComponent(btnPesquisar))
-                .addGap(28, 28, 28)
+                    .addComponent(btnPesquisar)
+                    .addComponent(btnAlterar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -177,6 +188,14 @@ public class frmContatos extends javax.swing.JFrame {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         listarValores();
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+
+        alterarContato();
+        listarValores();
+
+
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,6 +233,7 @@ public class frmContatos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JLabel jLabel1;
@@ -245,4 +265,29 @@ public class frmContatos extends javax.swing.JFrame {
         }
 
     }
+
+    private void alterarContato() {
+        try {
+            String telefone, nome, email;
+
+            telefone = txtTelefone.getText();
+            nome = txtNome.getText();
+            email = txtEmail.getText();
+
+            UsuarioDTO objusuariodto = new UsuarioDTO();
+            objusuariodto.setTelefone(telefone);
+            objusuariodto.setNome(nome);
+            objusuariodto.setEmail(email);
+
+            UsuarioDAO objusuariodao = new UsuarioDAO();
+            objusuariodao.alterarContato(objusuariodto);
+
+            JOptionPane.showMessageDialog(null, "Contato alterado com sucesso!");
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmContatos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao alterar contato: " + ex.getMessage());
+        }
+    }
+
 }
