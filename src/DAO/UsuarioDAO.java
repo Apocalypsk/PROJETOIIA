@@ -79,5 +79,25 @@ public class UsuarioDAO {
             JOptionPane.showMessageDialog(null, "usuarioDAO Alterar" + erro);
         }
     }
+    
+    public void ExcluirContato(UsuarioDTO objusuariodto) throws ClassNotFoundException {
+        String sql = "DELETE FROM contatos WHERE telefone = ?";
+    
+           
+        conn = new conexaoDAO().conectaBD();
 
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, objusuariodto.getTelefone());
+
+
+            pstm.execute();
+            pstm.close();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "usuarioDAO Excluir" + erro);
+        }
+}
+    
 }
